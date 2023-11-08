@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Dating Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .profile-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .submit-button {
+            background-color: #ff6600;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .submit-button:hover {
+            background-color: #ff4500;
+        }
+
+        /* Styling for file input */
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        small {
+            display: block;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-form">
+        <h1>Create Your Dating Profile</h1>
+        <form action="{{ url_for('create_profile', id=id) }}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" required>
+            </div>
+            <div class="form-group">
+                <label for="hobbies">Hobbies:</label>
+                <textarea id="hobbies" name="hobbies" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="about">About Me:</label>
+                <textarea id="about" name="about" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="interestedIn">interested in</label>
+                <select id="interestedIn" name="interestedIn" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="profile-photo">Profile Photo:</label>
+                <input type="file" id="profile-photo" name="profile_photo" accept="image/*">
+            </div>
+            <div class="form-group">
+                <label for="normal-photos">Normal Photos:</label>
+                <input type="file" id="normal-photos" name="normal_photos[]" accept="image/*" multiple>
+                <small>(You can select multiple photos by holding down the Ctrl or Command key)</small>
+            </div>
+            <div class="button-container">
+                <button class="submit-button" type="submit">Create Profile</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

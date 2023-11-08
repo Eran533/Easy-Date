@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .profile-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .submit-button {
+            background-color: #ff6600;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .submit-button:hover {
+            background-color: #ff4500;
+        }
+
+        /* Styling for file input */
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        small {
+            display: block;
+            margin-top: 5px;
+        }
+        .profile-photo {
+            max-width: 200px;
+            max-height: 200px;
+        }
+        .normal-photos-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: nowrap; /* Prevent photos from wrapping to the next line */
+            overflow-x: auto; /* Allow horizontal scrolling for multiple photos */
+        }
+
+        .normal-photos-list li {
+            margin-right: 10px; /* Add spacing between photos */
+        }
+
+        .normal-photos-list img {
+            max-width: 100px; /* Adjust the maximum width as needed */
+            max-height: 100px; /* Adjust the maximum height as needed */
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-form">
+        <h1>Edit Profile</h1>
+        <form action="{{ url_for('edit_profile', profile_id=user['id'], user_id=user['user_id']) }}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="{{ user['name'] }}">
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" value="{{ user['age'] }}">
+            </div>
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" value="{{ user['location'] }}">
+            </div>
+            <div class="form-group">
+                <label for="hobbies">Hobbies:</label>
+                <textarea id="hobbies" name="hobbies" rows="4">{{ user['hobbies'] }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="about">About Me:</label>
+                <textarea id="about" name="about" rows="4">{{ user['about_me'] }}</textarea>
+            </div>
+            <div class="button-container">
+                <button class="submit-button" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

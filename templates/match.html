@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romantic Match</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(#ffffff); /* Red to White gradient */
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(to bottom, #ff6f61, #ff6f61); /* Keep the Coral color for the header */
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff6f61; /* Coral */
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-right: 10px; /* Add some spacing between buttons */
+        }
+
+        .button:hover {
+            background-color: #ff4532; /* Lighter Coral */
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .match-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Romantic Match</h1>
+    </header>
+    <p>
+        <a class="button" href="{{ url_for('app_page', id=user_profile['id'], interestedIn=user_profile['interestedIn']) }}">Go Back to App Page</a>
+    </p>
+    <div class="container">
+        <img src="{{ url_for('static', filename='profiles/' + profile['profile_photo']) }}" alt="User Photo" class="match-photo">
+        <p><strong>Age:</strong> {{ profile.age }}</p>
+        <p><strong>Location:</strong> {{ profile.location }}</p>
+        <p><strong>Hobbies:</strong> {{ profile.hobbies }}</p>
+        <p><strong>About Me:</strong> {{ profile.about_me }}</p>
+        <p><strong>Gender:</strong> {{ profile.gender }}</p>
+        <p><strong>Interested In:</strong> {{ profile.interestedIn }}</p>
+        <a class="button" href="{{ url_for('chat', user_id=user_id, profile_id=profile['user_id']) }}">Chat with {{ profile['name'] }}</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        /* Reset some default styles */
+        body, h1, p, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .profile-card {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .profile-photo {
+            max-width: 150px; /* Adjust the width as needed */
+            max-height: 150px; /* Adjust the height as needed */
+            border-radius: 50%;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        /* Group related properties together for better readability */
+        .profile-location,
+        .profile-age,
+        .profile-hobbies,
+        .profile-about-me,
+        .profile-gender,
+        .profile-interestedIn {
+            margin-top: 10px;
+        }
+
+        .profile-photos {
+            margin-top: 20px;
+        }
+
+        /* Improve photo listing styling and make normal photos the same size */
+        .profile-photos p {
+            font-weight: bold;
+        }
+
+        .profile-photos ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .profile-photos li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        /* Add a bit of spacing between normal photos and set a fixed size */
+        .profile-photos img {
+            margin-right: 5px;
+            width: 100px; /* Adjust the width as needed */
+            height: 100px; /* Adjust the height as needed */
+            cursor: pointer; /* Add pointer cursor to indicate clickability */
+        }
+
+        /* Style the "Back to Profile" link as a button */
+        .back-to-profile-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* CSS for the modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-image {
+            display: block;
+            margin: 0 auto;
+            max-width: 90%;
+            max-height: 90%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="profile-container">
+            <div class="profile-card">
+                <img src="{{ url_for('static', filename='profiles/' + profile['profile_photo']) }}" class="profile-photo" alt="Profile Photo">
+                <h2 class="profile-name">{{ profile['name'] }}</h2>
+                <p class="profile-location">Location: {{ profile['location'] }}</p>
+                <p class="profile-age">Age: {{ profile['age'] }}</p>
+                <p class="profile-hobbies">Hobbies: {{ profile['hobbies'] }}</p>
+                <p class="profile-about-me">About Me: {{ profile['about_me'] }}</p>
+                <p class="profile-gender">Gender: {{ profile['gender'] }}</p>
+                <div class="profile-photos">
+                    <p>Normal Photos:</p>
+                    <ul>
+                        {% for photo in profile['normal_photos'] %}
+                            <li><img src="{{ url_for('static', filename='users_photos/' + photo) }}" alt="Normal Photo"></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <a href="{{ url_for('app_page', id=user_profile['id'], interestedIn=user_profile['interestedIn']) }}" class="back-to-profile-btn">Back to Profile</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for displaying the enlarged photo -->
+    <div id="photoModal" class="modal">
+        <img id="modalImage" class="modal-image" alt="Enlarged Photo">
+    </div>
+
+    <script>
+        // Get all normal photo elements
+        var normalPhotos = document.querySelectorAll('.profile-photos img');
+
+        // Get the modal and modal image elements
+        var modal = document.getElementById('photoModal');
+        var modalImage = document.getElementById('modalImage');
+
+        // Loop through each normal photo and add a click event listener
+        normalPhotos.forEach(function(photo) {
+            photo.addEventListener('click', function() {
+                modal.style.display = 'block';
+                modalImage.src = photo.src;
+            });
+        });
+
+        // Close the modal when clicking anywhere on it
+        modal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

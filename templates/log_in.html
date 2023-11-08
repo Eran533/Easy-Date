@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Easy Date</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+    animation: changeBackground 20s infinite;
+    background-size: cover;
+    transition: background-color 0.3s ease;
+}
+
+@keyframes changeBackground {
+    0% {
+        background-image: url('static/images/a.jpg');
+    }
+    50% {
+        background-image: url('static/images/b.jpg');
+    }
+    100% {
+        background-image: url('static/images/a.jpg');
+    }
+}
+
+header {
+    background-color: #ff3366;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    margin: 0;
+}
+
+.container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+form {
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.btn-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff3366;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 10px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #d81b60;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Login to Easy Date</h1>
+    </header>
+    <div class="container">
+        <form id="login-form" method="post" action="/process_login">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+
+            <div class="btn-container">
+                <button type="submit" class="btn">Login</button>
+                <a href="{{ url_for('register') }}" class="btn">Register</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

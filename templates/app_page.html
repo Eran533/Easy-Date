@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Date</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* Profile card styling */
+        .profile-card {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-photo {
+            max-width: 200px; /* Increase the width to make it a medium circle */
+            height: 200px; /* Maintain a square shape for the circle */
+            border-radius: 50%;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        /* Action buttons */
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between; /* Align buttons to the left and right */
+        }
+
+        .action-button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        /* Like button styles */
+        .like-button {
+            background-color: #fff;
+            color: #fff;
+        }
+
+        /* Dislike button styles */
+        .dislike-button {
+            background-color: #fff;
+            color: #fff;
+        }
+
+        /* Match message */
+        .match-message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #007BFF;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        /* Notification styles */
+        .notification-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+        }
+
+        .notification {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .close-button {
+            background-color: #fff;
+            color: #007BFF;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .action-button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .profile-photo:hover {
+            transform: scale(1.1);
+        }
+        .view-matches-link {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+        .Log_out-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF; /* Background color for the button */
+            color: #fff; /* Text color for the button */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .Log_out-button:hover {
+            background-color: #0056b3; /* Change the background color on hover */
+        }
+        .edit-profile-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF; /* Background color for the button */
+            color: #fff; /* Text color for the button */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .edit-profile-button:hover {
+            background-color: #0056b3; /* Change the background color on hover */
+        }
+    </style>
+</head>
+<body>
+<form action="/">
+        <button class="Log_out-button" type="submit">Log out</button>
+</form>
+    <form action="{{ url_for('edit_profile', profile_id=profile['id'], user_id=id) }}" class="profile-form">
+        <button class="edit-profile-button" type="submit">Edit profile</button>
+    </form>
+<a href="{{ url_for('matches', user_id=id) }}" class="view-matches-link">View Matches({{ len_matches }})</a>
+<p></p>
+    <div class="container">
+        <div id="profile-container">
+            <div class="profile-card" id="profile-{{ profile['id'] }}">
+                <a href="{{ url_for('profile_details', user_id=id, profile_id=profile['id']) }}"><img src="{{ url_for('static', filename='profiles/' + profile['profile_photo']) }}" class="profile-photo" alt="Profile Photo"></a>
+                <h2 class="profile-name">Name : {{ profile['name'] }}</h2>
+                <h2 class="profile-name">City : {{ profile['location'] }}</h2>
+                <h2 class="profile-name">Age : {{ profile['age'] }}</h2>
+                <div class="action-buttons">
+                    <form action="{{ url_for('Disslike', user_id=id, profile_id=profile['id']) }}" method="POST">
+                        <button class="action-button dislike-button">❌</button>
+                    </form>
+                    <form action="{{ url_for('like', user_id=id, profile_id=profile['id']) }}" method="POST">
+                        <button class="action-button like-button">❤️</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <p></p>
+        <div class="search-matches">
+            <form action="{{ url_for('app_page', id=id, interestedIn=interestedIn) }}" method="GET">
+                <label for="max-distance">Search Matches within (km):</label>
+                <input type="number" id="max-distance" name="maxDistance" min="1" placeholder="Enter max distance" value="{{ maxDistance }}">
+                <p></p>
+                <label for="max-distance">Search Matches within (age):</label>
+                <input type="number" id="max-age" name="maxAge" min="18" placeholder="Enter max age" value="{{ maxAge }}">
+                <button type="submit" id="search-button" class="action-button">Search</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

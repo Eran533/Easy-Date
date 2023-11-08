@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Date App - Matches</title>
+    <style>
+        /* Basic styling for the page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #007BFF;
+        }
+
+        /* Styling for the matches list */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin: 5px 0;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            position: relative; /* Add this line for relative positioning */
+        }
+
+        .match-photo {
+            width: 50px; /* Adjust the width as needed */
+            height: 50px; /* Adjust the height as needed */
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+        .fa-user-xmark {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #FF0000;
+            font-size: 20px;
+            transition: color 0.3s, font-size 0.3s;
+        }
+
+        .fa-user-xmark:hover {
+            color: #808080;
+            font-size: 28px;
+        }
+        .back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-top: 20px; /* Adjust the margin as needed */
+        }
+
+        .back-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Matches</h1>
+    <ul>
+        {% for match in matches %}
+        <li>
+            {% if user_id == match['user_ids'].split(',')[0] %}
+                <a class="btn" href="{{ url_for('view_match', user_id=user_id, profile_id=match['user_ids'].split(',')[1]) }}">View Match</a>
+            {% elif user_id == match['user_ids'].split(',')[1] %}
+                <a class="btn" href="{{ url_for('view_match', user_id=user_id, profile_id=match['user_ids'].split(',')[0]) }}">View Match</a>
+            {% else %}
+                <a class="btn" href="{{ url_for('view_match', user_id=user_id, profile_id='N/A') }}">View Match</a>
+            {% endif %}
+            <img src="{{ url_for('static', filename='profiles/' + match['user_photo']) }}" alt="User Photo" class="match-photo">
+            <img src="{{ url_for('static', filename='profiles/' + match['user2_photo']) }}" alt="User Photo" class="match-photo">
+            {{ match['names'] }}
+            <form action="{{ url_for('delete_match', user_id=user_id, profile_id=match['user_ids'].split(',')[1]) }}" method="POST" id="delete-form">
+                <i class="fa-solid fa-user-xmark" id="delete-icon"></i>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    <a class="back-btn" href="{{ url_for('app_page', id=user_id, interestedIn=user_profile['interestedIn']) }}">Go Back to App Page</a>
+<script src="https://kit.fontawesome.com/e874866c00.js" crossorigin="anonymous"></script>
+<script>
+  document.getElementById('delete-icon').addEventListener('click', function() {
+    document.getElementById('delete-form').submit();
+  });
+</script>
+</body>
+</html>
