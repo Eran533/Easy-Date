@@ -98,7 +98,7 @@ def register():
 def verify(phone_number, id):
     if request.method == 'GET':
         account_sid = "ACda33beeba9c9d6a24a24c0e1858b402c"
-        auth_token = "30d20ba54dc40314cd4c4bbd1be6c1c3"
+        auth_token = "7442272be0e3f480f5cbd99b82dd977b"
         verify_sid = "VA678f253125c2c9d2d90eae5a1574f49e"
         verified_number = f"+972{str(phone_number)[1:]}"
         client = Client(account_sid, auth_token)
@@ -112,7 +112,7 @@ def verify(phone_number, id):
     elif request.method == 'POST':
         otp_code = request.form.get('verification_code')
         account_sid = "ACda33beeba9c9d6a24a24c0e1858b402c"
-        auth_token = "30d20ba54dc40314cd4c4bbd1be6c1c3"
+        auth_token = "7442272be0e3f480f5cbd99b82dd977b"
         verify_sid = "VA678f253125c2c9d2d90eae5a1574f49e"
         verified_number = f"+972{str(phone_number)[1:]}"
         client = Client(account_sid, auth_token)
