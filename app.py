@@ -1,6 +1,8 @@
 import math
 import os
 from flask import Flask, render_template, request, redirect, url_for, jsonify
+from twilio.base.exceptions import TwilioRestException
+
 from data_models import db
 from twilio.rest import Client
 from datamanager.SQLiteDataManager import SQLiteDataManager
@@ -12,7 +14,6 @@ db_path = os.path.join(os.path.dirname(__file__), "datamanager", "EasyDateApp.db
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
 data_manager = SQLiteDataManager(app)
 socketio = SocketIO(app, async_mode='eventlet')
-audio_file_name = ""
 
 def get_lat_lon_location(city):
     url = "https://forward-reverse-geocoding.p.rapidapi.com/v1/forward"
@@ -97,22 +98,25 @@ def register():
 @app.route('/verify/<phone_number>/<id>', methods=['GET', 'POST'])
 def verify(phone_number, id):
     if request.method == 'GET':
-        account_sid = "AC81da557652ce9fdffc259a77d20e4af7"
-        auth_token = "196ffbc7e7fc723c350544e49e1ec30a"
-        verify_sid = "VA183b1a8c08603c924b6415880fdad754"
-        verified_number = f"+972{str(phone_number)[1:]}"
-        client = Client(account_sid, auth_token)
+        try:
+            account_sid = "AC81da557652ce9fdffc259a77d20e4af7"
+            auth_token = "cf985887a5a61d81ffb1d86a4ba88b8b"
+            verify_sid = "VA183b1a8c08603c924b6415880fdad754"
+            verified_number = f"+972{str(phone_number)[1:]}"
+            client = Client(account_sid, auth_token)
 
-        verification = client.verify.v2.services(verify_sid) \
-            .verifications \
-            .create(to=verified_number, channel="sms")
+            verification = client.verify.v2.services(verify_sid) \
+                .verifications \
+                .create(to=verified_number, channel="sms")
 
-        return render_template("verify.html", phone_number=phone_number, id=id)
+            return render_template("verify.html", phone_number=phone_number, id=id)
+        except TwilioRestException as e:
+            print(f"Twilio error: {e}")
 
     elif request.method == 'POST':
         otp_code = request.form.get('verification_code')
         account_sid = "AC81da557652ce9fdffc259a77d20e4af7"
-        auth_token = "196ffbc7e7fc723c350544e49e1ec30a"
+        auth_token = "cf985887a5a61d81ffb1d86a4ba88b8b"
         verify_sid = "VA183b1a8c08603c924b6415880fdad754"
         verified_number = f"+972{str(phone_number)[1:]}"
         client = Client(account_sid, auth_token)
