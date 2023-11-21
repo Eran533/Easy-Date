@@ -97,9 +97,9 @@ def register():
 @app.route('/verify/<phone_number>/<id>', methods=['GET', 'POST'])
 def verify(phone_number, id):
     if request.method == 'GET':
-        account_sid = "ACda33beeba9c9d6a24a24c0e1858b402c"
-        auth_token = "7442272be0e3f480f5cbd99b82dd977b"
-        verify_sid = "VA678f253125c2c9d2d90eae5a1574f49e"
+        account_sid = "AC81da557652ce9fdffc259a77d20e4af7"
+        auth_token = "196ffbc7e7fc723c350544e49e1ec30a"
+        verify_sid = "VA183b1a8c08603c924b6415880fdad754"
         verified_number = f"+972{str(phone_number)[1:]}"
         client = Client(account_sid, auth_token)
 
@@ -111,9 +111,9 @@ def verify(phone_number, id):
 
     elif request.method == 'POST':
         otp_code = request.form.get('verification_code')
-        account_sid = "ACda33beeba9c9d6a24a24c0e1858b402c"
-        auth_token = "7442272be0e3f480f5cbd99b82dd977b"
-        verify_sid = "VA678f253125c2c9d2d90eae5a1574f49e"
+        account_sid = "AC81da557652ce9fdffc259a77d20e4af7"
+        auth_token = "196ffbc7e7fc723c350544e49e1ec30a"
+        verify_sid = "VA183b1a8c08603c924b6415880fdad754"
         verified_number = f"+972{str(phone_number)[1:]}"
         client = Client(account_sid, auth_token)
 
